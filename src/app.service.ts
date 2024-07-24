@@ -17,6 +17,8 @@ export class AppService {
 
   async csvToJson(): Promise<{ data?: UserDetails[]; error?: string }> {
     try {
+      // have assumed the data as clean data and not validating the data
+
       // Read the CSV file
       const getJsonFromCsv = await readCsv(process.env.CSV_FILE);
 
