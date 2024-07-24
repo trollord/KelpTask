@@ -1,4 +1,6 @@
-export const convertRawJsonToObject = (rawJson) => {
+import { UserDetails } from 'src/interface/user';
+
+export const convertRawJsonToObject = (rawJson): UserDetails[] => {
   return rawJson.map((obj) => {
     const result = {};
 
@@ -17,7 +19,6 @@ export const convertRawJsonToObject = (rawJson) => {
         }
       }
     }
-
     return result;
   });
 };

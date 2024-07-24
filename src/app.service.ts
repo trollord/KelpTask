@@ -17,12 +17,17 @@ export class AppService {
 
   async csvToJson(): Promise<{ data?: UserDetails[]; error?: string }> {
     try {
-      const rawJson = await readCsv(process.env.CSV_FILE);
-      const userDetails = await convertRawJsonToObject(rawJson);
-      
-      await uploadDataToDb(this.client, userDetails);
-      printAgeGroup(userDetails);
+      // Read the CSV file
+      const getJsonFromCsv = await readCsv(process.env.CSV_FILE);
 
+      // Convert the raw JSON data to an array of objects
+      const userDetails = await convertRawJsonToObject(getJsonFromCsv);
+      
+      // Upload the data to the database
+      await uploadDataToDb(this.client, userDetails).then(() => {
+        printAgeGroup(userDetails);
+      });
+      
       return {data : userDetails}
     } catch (error) {
       if (error.code === '42P01') {

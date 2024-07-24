@@ -7,9 +7,11 @@ export const uploadDataToDb = async (
 ) => {
   try {
     const insertDetails = userDetails.reduce(
+      // Destructure the object to get the name, age, address, and record
       (str, { name, age, address, ...record }, i) => {
-        const { firstName, lastName } = name;
-        str += `('${firstName} ${lastName}', ${age}, '${JSON.stringify(address)}', '${JSON.stringify(record)}')`;
+        str += `('${name.firstName} ${name.lastName}', ${age}, '${JSON.stringify(address)}', '${JSON.stringify(record)}')`;
+
+        // Add comma if it is not the last record
         str += i === userDetails.length - 1 ? '' : ', ';
         return str;
       },
